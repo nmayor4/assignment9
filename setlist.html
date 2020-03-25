@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JSON Setlist Practice</title>
+	<style type="text/css">
+        html,body,input {font-size:20px; font-family: Garamond, Times, Helvetica, Arial; text-align: center;}
+        body {background-color: #DCE9EC;}
+        hr.rounded {border-top: 2px solid; border-radius: 2px; color: #2D6152; border-color: #2D6152}
+        p {font-size: 25px;}
+        .button {background-color: #5B6E73; border: none; color: #BDD0D5; padding: 5px 10px; text-align: center; font-size: 18px; cursor: pointer; text-decoration: none; font-family: Merriweather, Garamond, Georgia, Times;}
+		.button:hover {background-color: #BDD0D5; color: #5B6E73;}
+		select {background-color: #EAF4F7; color: #325661;}
+
+		* {box-sizing: border-box;}
+		.row {display: flex;}
+		.column {flex: 50%; padding: 10px;}
+    </style>
+
+    <script type="text/javascript">
+    	// Filter songs by selected genre
+    	function filterSongs() {
+    		switch (document.getElementById("genre").value) {
+    			case "alt":
+					getGenre("Alternative");
+					break;
+				case "pop":
+					getGenre("Pop");
+					break;
+				case "rb":
+					getGenre("R&B");
+					break;
+				case "soul":
+					getGenre("Soul");
+					break;
+				case "flamenco":
+					getGenre("Flamenco");
+					break;
+				case "all":
+					getGenre("All");
+					return;
+			}
+    	}
+
+    	// Print all songs of a given genre
+    	function getGenre(g) {
+    		var filtered = '';
+    		if (g == "All")
+    		{
+    			for (let i = 0; i < setlist.length; i++)
+    			{
+    				filtered += getSong(setlist[i]);
+    			}
+    			document.getElementById("songs").innerHTML = filtered;
+    			return;
+    		}
+
+    		for (let i = 0; i < setlist.length; i++) {
+    			for (let j = 0; j < setlist[i].genres.length; j++) {
+    				if (setlist[i].genres[j] == g) {
+    					filtered += getSong(setlist[i]);
+    				}
+    			}
+			}
+    		document.getElementById("songs").innerHTML = filtered;
+    	}
+
+    	// Formats output for an individual song
+    	function getSong(s) {
+    		var song = ((s.title).bold() + "<br>" );
+
+			if (s.artists.length > 1) {
+				song += ("Artists: " + s.artists[0] + ", " + s.artists[1] + "<br>");
+			}
+			else {
+				song += ("Artist: " + s.artists + "<br>");
+			}
+
+			if (s.genres.length > 1) {
+				song += ("Genres: " + s.genres[0] + ", " + s.genres[1] + "<br>");
+			}
+			else {
+				song += ("Genre: " + s.genres + "<br>");
+			}
+
+			song += ("Released " + s.year + "<br><br>")
+
+			return song;
+    	}
+    </script>
+</head>
+
+	<body>
+		<script language="javascript">
+		setlist = 
+		[
+			{
+				"title": "Freaking Out",
+				"artists": ["A R I Z O N A"],
+				"genres": ["Alternative"],
+				"year": 2018
+			},
+			{
+				"title": "Dance Monkey",
+				"artists": ["Tones and I"],
+				"genres": ["Pop"],
+				"year": 2019
+			},
+			{
+				"title": "Corduroy Dreams",
+				"artists": ["Rex Orange County"],
+				"genres": ["Alternative"],
+				"year": 2016
+			},
+			{
+				"title": "1950",
+				"artists": ["King Princess"],
+				"genres": ["Pop"],
+				"year": 2018
+			},
+			{
+				"title": "Figures, a Reprise",
+				"artists": ["Jessie Reyes", "Daniel Caesar"],
+				"genres": ["R&B", "Soul"],
+				"year": 2016
+			},
+			{
+				"title": "Easy",
+				"artists": ["Mac Ayres"],
+				"genres": ["R&B"],
+				"year": 2017
+			},
+			{
+				"title": "DI MI NOMBRE",
+				"artists": ["Rosalía"],
+				"genres": ["Alternative", "Flamenco"],
+				"year": 2018
+			},
+			{
+				"title": "How Do You Sleep?",
+				"artists": ["Sam Smith"],
+				"genres": ["Pop"],
+				"year": 2019
+			},
+			{
+				"title": "Honey",
+				"artists": ["Kehlani"],
+				"genres": ["R&B", "Soul"],
+				"year": 2017
+			},
+			{
+				"title": "Rise Up",
+				"artists": ["Andra Day"],
+				"genres": ["R&B", "Soul"],
+				"year": 2015
+			}
+		]
+
+	</script>
+
+	<div class="row">
+	  <div class="column" style="background-color:#aaa;">
+		<div id="songs">
+			<script type="text/javascript">
+				getGenre("All");
+			</script>
+		</div>
+
+	  </div>
+	  <div class="column" style="background-color:#bbb;">
+	    	Filter songs by genre: <br>
+	
+			<select id="genre" name="genre">
+				<option value = "all" selected> All </option>
+				<option value = "alt"> Alternative </option>
+				<option value = "pop"> Pop </option>
+				<option value = "rb"> R&B </option>
+				<option value = "soul"> Soul </option>
+				<option value = "flamenco"> Flamenco </option>
+			</select> <br> <br>
+			<button type="button" class="button" value="filter" onclick="filterSongs()">Filter</button>
+			<br><br>
+	  </div>
+	</div>
+
+
+	</body>
+</html>
